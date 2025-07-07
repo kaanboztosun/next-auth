@@ -5,6 +5,7 @@ import { getToken } from "next-auth/jwt";
 export async function middleware(request: NextRequest) {
   const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
   const isAuthPage = request.nextUrl.pathname.startsWith("/login");
+  const isAdminPage = request.nextUrl.pathname.startsWith("/admin");
 
   if (isAuthPage && token) {
     return NextResponse.redirect(new URL("/", request.url));
@@ -14,10 +15,15 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
+ 
+  if (isAdminPage && token?.role !== "admin") {
+    return NextResponse.redirect(new URL("/dashboard", request.url));
+  }
+
   return NextResponse.next();
 }
 
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/profile/:path*"],
+  matcher: ["/dashboard/:path*", "/profile/:path*", "/admin/:path*"],
 };

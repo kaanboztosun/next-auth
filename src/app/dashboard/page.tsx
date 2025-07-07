@@ -25,6 +25,25 @@ export default function DashboardPage() {
   const { data: session, status } = useSession();
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
 
+  
+  const links = React.useMemo(() => {
+    if ((session as any)?.role === "admin") {
+      return [
+        ...sidebarLinks,
+        {
+          name: "Admin Panel",
+          href: "/admin",
+          icon: (
+            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          ),
+        },
+      ];
+    }
+    return sidebarLinks;
+  }, [(session as any)?.role]);
+
   if (status === "loading") {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -43,7 +62,7 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-100 to-purple-200 flex flex-col relative">
-      
+     
       <header className="flex items-center justify-between bg-gradient-to-r from-blue-700 to-purple-600 shadow-lg px-6 py-4 z-20">
         <div className="flex items-center gap-2">
           <button
@@ -88,7 +107,7 @@ export default function DashboardPage() {
           </button>
         </div>
         <nav className="flex flex-col gap-2 px-6 py-6">
-          {sidebarLinks.map((link) => (
+          {links.map((link) => (
             <a
               key={link.name}
               href={link.href}
@@ -101,7 +120,7 @@ export default function DashboardPage() {
         </nav>
       </aside>
 
-   
+      
       <main className="flex-1 flex flex-col items-center justify-center p-6 transition-all duration-300">
         <div className="bg-white rounded-2xl shadow-2xl p-10 flex flex-col items-center w-full max-w-lg border border-blue-100">
           <div className="w-28 h-28 mb-4">
@@ -112,7 +131,10 @@ export default function DashboardPage() {
             />
           </div>
           <h1 className="text-4xl font-extrabold mb-2 text-blue-700 drop-shadow">Hoşgeldin, {session.user?.name || "Kullanıcı"}!</h1>
-          <p className="text-gray-600 mb-6 text-lg">{session.user?.email}</p>
+          <p className="text-gray-600 mb-2 text-lg">{session.user?.email}</p>
+          <span className="inline-block px-3 py-1 mb-6 rounded-full bg-blue-100 text-blue-700 font-semibold text-sm">
+            Rol: {(session as any).role || "user"}
+          </span>
           <button
             className="px-6 py-2 bg-blue-700 text-white rounded-lg hover:bg-blue-800 transition font-semibold shadow"
             onClick={() => signOut()}
