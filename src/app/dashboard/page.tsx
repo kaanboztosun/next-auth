@@ -43,11 +43,11 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-100 to-purple-200 flex flex-col relative">
-   
+      
       <header className="flex items-center justify-between bg-gradient-to-r from-blue-700 to-purple-600 shadow-lg px-6 py-4 z-20">
         <div className="flex items-center gap-2">
           <button
-            className="p-2 rounded hover:bg-blue-800 transition md:hidden"
+            className="p-2 rounded hover:bg-blue-800 transition"
             onClick={() => setSidebarOpen(true)}
             aria-label="Menüyü Aç"
           >
@@ -58,28 +58,27 @@ export default function DashboardPage() {
           <span className="text-2xl font-bold text-white tracking-wide drop-shadow">NextAuth Dashboard</span>
         </div>
         <button
-          className="hidden md:block px-5 py-2 bg-white text-blue-700 rounded-lg hover:bg-blue-100 transition font-semibold shadow"
+          className="px-5 py-2 bg-white text-blue-700 rounded-lg hover:bg-blue-100 transition font-semibold shadow"
           onClick={() => signOut()}
         >
           Çıkış Yap
         </button>
       </header>
 
-     
+      
       <div
-        className={`fixed inset-0 bg-black bg-opacity-40 z-30 transition-opacity duration-300 ${sidebarOpen ? "opacity-100 visible" : "opacity-0 invisible"} md:hidden`}
+        className={`fixed inset-0 bg-black bg-opacity-40 z-30 transition-opacity duration-300 ${sidebarOpen ? "opacity-100 visible" : "opacity-0 invisible"}`}
         onClick={() => setSidebarOpen(false)}
         aria-hidden={!sidebarOpen}
       />
-      
       <aside
         className={`fixed top-0 left-0 h-full w-72 bg-white shadow-2xl z-40 transform transition-transform duration-300 ease-in-out
-          ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 md:static md:block md:shadow-none`}
+          ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
       >
         <div className="flex items-center justify-between px-6 py-5 border-b bg-gradient-to-r from-blue-700 to-purple-600">
           <span className="text-lg font-bold text-white tracking-wide">Menü</span>
           <button
-            className="md:hidden p-2 rounded hover:bg-blue-800 transition"
+            className="p-2 rounded hover:bg-blue-800 transition"
             onClick={() => setSidebarOpen(false)}
             aria-label="Menüyü Kapat"
           >
@@ -102,20 +101,8 @@ export default function DashboardPage() {
         </nav>
       </aside>
 
-      
-      <button
-        className="hidden md:block fixed top-6 left-6 z-30 p-2 bg-blue-700 text-white rounded-full shadow-lg hover:bg-blue-800 transition md:hidden"
-        style={{ display: "none" }}
-        aria-label="Menüyü Aç"
-        onClick={() => setSidebarOpen((open) => !open)}
-      >
-        <svg className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-      </button>
-
-      
-      <main className="flex-1 flex flex-col items-center justify-center p-6 md:ml-72 transition-all duration-300">
+   
+      <main className="flex-1 flex flex-col items-center justify-center p-6 transition-all duration-300">
         <div className="bg-white rounded-2xl shadow-2xl p-10 flex flex-col items-center w-full max-w-lg border border-blue-100">
           <div className="w-28 h-28 mb-4">
             <img
@@ -127,7 +114,7 @@ export default function DashboardPage() {
           <h1 className="text-4xl font-extrabold mb-2 text-blue-700 drop-shadow">Hoşgeldin, {session.user?.name || "Kullanıcı"}!</h1>
           <p className="text-gray-600 mb-6 text-lg">{session.user?.email}</p>
           <button
-            className="md:hidden px-6 py-2 bg-blue-700 text-white rounded-lg hover:bg-blue-800 transition font-semibold shadow"
+            className="px-6 py-2 bg-blue-700 text-white rounded-lg hover:bg-blue-800 transition font-semibold shadow"
             onClick={() => signOut()}
           >
             Çıkış Yap

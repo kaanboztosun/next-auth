@@ -24,7 +24,7 @@ export default function LoginPage() {
   }
 
   if (session) {
-    
+   
     return (
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-100 to-purple-200">
         <span className="text-lg">Yönlendiriliyorsunuz...</span>
@@ -42,7 +42,7 @@ export default function LoginPage() {
             className="w-24 h-24 object-contain rounded-full border-4 border-blue-400 shadow"
           />
         </div>
-        <h1 className="text-3xl font-extrabold mb-2 text-blue-700 drop-shadow">NextAuth Giriş</h1>
+        <h1 className="text-3xl font-extrabold mb-2 text-blue-700 drop-shadow text-center w-full">Hoşgeldiniz</h1>
         <p className="text-gray-600 mb-6 text-center">Devam etmek için Auth0 ile giriş yap.</p>
         <button
           className="flex items-center gap-2 px-6 py-3 bg-blue-700 text-white rounded-lg hover:bg-blue-800 transition font-semibold shadow-lg text-lg"
