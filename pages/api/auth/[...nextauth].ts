@@ -18,11 +18,26 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, account }: { token: JWT; account?: Account | null }) {
       if (account) {
         token.accessToken = account.access_token;
+
+       
+        try {
+          const res = await fetch(`https://${process.env.AUTH0_DOMAIN}/userinfo`, {
+            headers: {
+              Authorization: `Bearer ${account.access_token}`,
+            },
+          });
+          const userinfo = await res.json();
+          
+          token.role = userinfo["https://your-domain/roles"]?.[0] || "user";
+        } catch (e) {
+          token.role = "user";
+        }
       }
       return token;
     },
     async session({ session, token }: { session: Session; token: JWT }) {
       (session as any).accessToken = token.accessToken;
+      (session as any).role = token.role || "user";
       return session;
     },
   },
